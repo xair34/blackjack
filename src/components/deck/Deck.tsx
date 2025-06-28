@@ -1,32 +1,21 @@
-import { useState } from "react";
-import Card from "./Card";
+import cardBack from '../../assets/svg_playing_cards/backs/red2.svg';
+import '../../style.scss';
+import { Card } from '../../types/card';
 
-const Deck = () => {
-    const suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-    const cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
-    const [playerCards, setPlayerCards] = useState({
-        cardOne: "",
-        cardTwo: ""
-    });
-    const deck = suits.flatMap(cardSuit => cardValues.map(card => `${card} of ${cardSuit}`));
-    
-    const givePlayerTwoCards = () =>{
-        
-        const[cardOne, cardTwo, ...remainingDeck] = shuffledDeck;
 
-        setPlayerCards({cardOne, cardTwo});
-    }
-
+const Deck = ({ currentDeck }: { currentDeck: Card[] }) => {
     return (
-        <div>
-            <button onClick={givePlayerTwoCards}>Deal Two Cards</button>
-            <div>
-                Player's Cards:
-                <div>{playerCards.cardOne}</div>
-                <div>{playerCards.cardTwo}</div>
-            </div>
-        </div>
+        <>
+            {
+                currentDeck.map((card, i) => (
+                    <img src={cardBack} key={i} className='card' />
+                ))
+            }
+            
+        </>
     );
+
 };
+
 
 export default Deck;

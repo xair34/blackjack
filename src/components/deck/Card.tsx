@@ -1,6 +1,7 @@
+import { Suits } from "../../types/suits";
 type CardProps = {
     value: string,
-    suit: string
+    suit: Suits
 }
 
 

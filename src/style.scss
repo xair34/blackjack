@@ -1,0 +1,40 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.card{
+    position: absolute;
+    top: 0;
+}
+.card:nth-child(1){
+    display: block;
+    position: relative;
+}
+.deck-container{
+    position: relative;
+
+}
+@for $i from 2 through 54 {
+  .card:nth-child(#{$i}) {
+    left: #{($i - 1) * .2}px;
+  }
+}
+
+.board{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 5em;
+}
+.game-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.player-side{
+    background: lightgreen;
+}
+.dealer-side{
+    display: flex;
+    gap: 3em;
+}
