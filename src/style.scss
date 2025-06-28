@@ -38,3 +38,9 @@
     display: flex;
     gap: 3em;
 }
+.dealer-hand .card{
+    position: absolute;
+    left: 350px;
+    top: 20px;
+    z-index: -1;
+}
