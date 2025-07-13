@@ -1,4 +1,6 @@
+import { Suits } from "./suits";
+
 export type Card = {
-    suit: string;
+    suit: Suits;
     value: string;
 }

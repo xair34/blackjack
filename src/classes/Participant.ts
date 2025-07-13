@@ -2,6 +2,12 @@ import { Card } from "../types/card";
 
 export class Participant {
     private _hand: Card[] = [];
+    private _handValue: number = 0;
+    private _softAces: number = 0;
+
+    get handValue(): number {
+        return this._handValue;
+    }
 
     get hand(): Card[] {
         return this._hand;
@@ -9,39 +15,31 @@ export class Participant {
 
     public addCard(card: Card): void {
         this._hand.push(card);
+
+        if (['king', 'queen', 'jack'].includes(card.value)) {
+            this._handValue += 10;
+        } else if (card.value === 'ace') {
+            this._handValue += 11;
+            this._softAces += 1;
+        } else {
+            this._handValue += parseInt(card.value);
+        }
+
+        while (this._handValue > 21 && this._softAces > 0) {
+            this._handValue -= 10;
+            this._softAces -= 1;
+        }
     }
     public resetHand(): void {
         this._hand = [];
-    }
-    public getHandValue(): number | string {
-        if (this._hand.length == 0) {
-            return 'No cards in hand yet';
-        }
-        let sum = 0;
-        let aceCount = 0;
-        for (const card of this._hand) {
-            if (card.value === 'king' || card.value === 'queen' || card.value === 'jack') {
-                sum += 10;
-            } else if (card.value === 'ace') {
-                aceCount += 1;
-            } else {
-                sum += parseInt(card.value);
-            }
-        }
-        for (let i = 0; i < aceCount; i++) {
-            if (sum + 11 <= 21 - (aceCount - 1 - i)) {
-                sum += 11;
-            } else {
-                sum += 1;
-            }
-        }
-        return sum;
+        this._handValue = 0;
+        this._softAces = 0;
     }
     public hasBlackJack(): boolean {
-        return this.getHandValue() == 21;
+        return this._handValue === 21 && this._hand.length === 2;
     }
     public isBusted(): boolean {
-        return typeof this.getHandValue() === 'number' && this.getHandValue() as number > 21;
+        return this._handValue > 21;
     }
 
 }
